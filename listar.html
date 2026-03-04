@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}
+Lista de Usuários
+{% endblock %}
+
+{% block content %}
+
+<div class="lista-container">
+
+    <h2>Lista de Usuários</h2>
+
+    <p class="total">
+        Total de usuários: {{ total }}
+    </p>
+
+    <table class="tabela">
+        <tr>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Email</th>
+            <th>Idade</th>
+            <th>Ações</th>
+        </tr>
+
+        {% for usuario in usuarios %}
+        <tr>
+            <td>{{ usuario.nome }}</td>
+            <td>{{ usuario.cpf }}</td>
+            <td>{{ usuario.email }}</td>
+            <td>{{ usuario.idade }}</td>
+            <td>
+                <form method="POST" action="/excluir/{{ usuario.cpf }}">
+                    <button type="submit" class="btn-excluir">
+                        Excluir
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <a href="/" class="voltar">
+        Voltar para Home
+    </a>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for categoria, mensagem in messages %}
+            <p class="mensagem">{{ mensagem }}</p>
+        {% endfor %}
+    {% endwith %}
+
+</div>
+
+{% endblock %}
